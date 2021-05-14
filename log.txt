@@ -1,0 +1,28 @@
+Server:
+----------
+[root@centos keepalive-module]# go build -race ka-server.go
+[root@centos keepalive-module]# ./ka-server 1.1.1.1
+Listening for peer nodes on: 1.1.1.1:5002
+Waiting for peers to connect...
+Peer: peer1 connected with address: 1.1.1.2:5002 keepalive intvl: 30 keepalive probes: 5
+sent KeepAlive msg: keepalive:1 to peer: peer1, current noRspProbesCnt: 1
+noRspProbesCnt set to zero for peer:  peer1
+sent KeepAlive msg: keepalive:2 to peer: peer1, current noRspProbesCnt: 1
+noRspProbesCnt set to zero for peer:  peer1
+sent KeepAlive msg: keepalive:3 to peer: peer1, current noRspProbesCnt: 1
+sent KeepAlive msg: keepalive:4 to peer: peer1, current noRspProbesCnt: 2
+sent KeepAlive msg: keepalive:5 to peer: peer1, current noRspProbesCnt: 3
+sent KeepAlive msg: keepalive:6 to peer: peer1, current noRspProbesCnt: 4
+sent KeepAlive msg: keepalive:7 to peer: peer1, current noRspProbesCnt: 5
+KeepAlive status down for peer:  peer1
+^C
+[root@centos keepalive-module]#
+
+Client:
+-----------
+[root@centos Linux]# go build -race ka-client.go
+[root@centos Linux]# ./ka-client 1.1.1.2 1.1.1.1 peer1 30 5
+Server reply: keepalive:1
+Server reply: keepalive:2
+^C
+[root@centos Linux]#
